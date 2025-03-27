@@ -1,5 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 let userSelectedDate;
 let timerInterval;
@@ -36,6 +38,15 @@ const options = {
 flatpickr(datetimePicker, options);
 
 startButton.addEventListener('click', () => {
+  if (!userSelectedDate) {
+    iziToast.warning({
+      title: 'Увага',
+      message: 'Будь ласка, виберіть дату перед запуском таймера',
+      position: 'topRight',
+    });
+    return;
+  }
+
   if (timerInterval) {
     clearInterval(timerInterval);
   }
